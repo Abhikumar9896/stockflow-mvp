@@ -1,8 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { productSchema, type ProductInput } from "@/schemas/product"
+import { createResolver } from "@/lib/utils/form"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -24,8 +24,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
     handleSubmit,
     formState: { errors },
   } = useForm<ProductInput>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(productSchema) as any,
+    resolver: createResolver(productSchema),
     defaultValues: defaultValues ?? {
       name: "",
       sku: "",

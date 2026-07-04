@@ -1,124 +1,112 @@
 # StockFlow
 
-Stock management app, simple aur beginner friendly.
+A multi-tenant SaaS inventory management system. Sign up your organization, add products, track stock levels, and get alerted on low inventory.
+
+Built for small sellers and internal teams who need a fast, no-frills way to manage their catalog.
+
+## Features
+
+- **Multi-tenant auth** — sign up with your organization name, email, and password. Every org gets its own isolated data.
+- **Product management** — create, edit, delete, and search products by name or SKU.
+- **Stock tracking** — set quantities and low-stock thresholds per product or globally.
+- **Dashboard** — see total products, total stock, and a low-stock alert list at a glance.
+- **Low-stock logic** — a product is flagged "Low Stock" when its quantity is at or below its threshold. Falls back to a global default if no per-product threshold is set.
+- **Settings** — configure a default low-stock threshold for your organization.
 
 ## Tech Stack
 
-### Frontend
-- **Next.js 15** (App Router) - Full stack framework, SEO acha, deployment easy
-- **TypeScript** - Errors kam, code likhne me confidence
-- **TailwindCSS 4** - Utility classes, CSS nahi likhna padta
-- **shadcn/ui** - Copy-paste components, apne hisaab se modify kar sakte ho
-- **React Hook Form** - Forms handle karta hai, validation sab sambhal leta hai
-- **Zod** - TypeScript validation, schema banao types auto generate
-- **TanStack Query** - Server data fetch/cache/update, loading states handle
-- **Lucide** - Icons, light weight aur simple
-- **Sonner** - Toast notifications
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Database | PostgreSQL |
+| ORM | Prisma (with driver adapter for serverless) |
+| Auth | Better Auth (email/password, session-based) |
+| Forms | React Hook Form + Zod |
+| UI | Tailwind CSS 4 + shadcn/ui + Lucide icons |
+| Cache | Redis (optional — falls back to DB-only sessions) |
+| Deployment | Vercel (recommended) |
 
-### Backend
-- **Next.js API Routes** - Alag Express server nahi, Next.js hi full stack hai
-- **Better Auth** - Session based authentication, setup easy
-- **Prisma** - ORM, typesafe queries, migrations
-- **PostgreSQL** - Relational database
-- **Redis** - Session caching, fast access
+## Project Structure
 
-### Folder Structure
 ```
 stockflow/
+  app/                          Next.js pages and API routes
+    (auth)/                     Login and signup pages
+    (dashboard)/                Dashboard, products, settings pages
+    api/auth/[...all]/          Better Auth API route
+  components/
+    dashboard/                  Dashboard-specific components
+    forms/                      Auth forms (login, signup)
+    layout/                     Navbar
+    products/                   Product list, table, row, form, dialogs
+    settings/                   Settings form
+    shared/                     Reusable components (AppLogo, AuthCard, PageHeader, StatCard)
+    ui/                         Base UI primitives (Button, Card)
+  lib/
+    actions/                    Server actions (auth, product, settings)
+    auth/                       Auth helpers and middleware utilities
+    services/                   Business logic layer (product, settings, dashboard)
+    utils/                      Shared utilities (number serialization, status labels, threshold logic, form resolver)
+    auth.ts                     Better Auth server configuration
+    auth-client.ts              Better Auth client configuration
+    db.ts                       Prisma client singleton
+    redis.ts                    Redis client (optional)
+  schemas/                      Zod validation schemas (login, signup, product)
+  types/                        TypeScript type definitions
   prisma/
-    schema.prisma         Database models
-    migrations/           Auto-generated migrations
-  src/
-    app/
-      api/auth/[...all]/  Better Auth API
-      login/              Login page
-      globals.css         Styles
-      layout.tsx          Root layout
-      page.tsx            Home page
-    components/
-      ui/button.tsx       shadcn button
-      login-form.tsx      Login form
-      providers.tsx       TanStack Query + Sonner
-    lib/
-      auth.ts             Better Auth config
-      auth-client.ts      Client auth
-      prisma.ts           Prisma client
-      redis.ts            Redis connection
-      schemas.ts          Zod schemas
-      actions.ts          Server actions
-      types.ts            Common types
-    middleware.ts         Auth protection
+    schema.prisma               Database schema
+    migrations/                 Database migrations
+  middleware.ts                 Route protection (redirects to /login)
 ```
 
-## Setup
+## Getting Started
 
-### 1. Install
+### Prerequisites
+
+- Node.js 20+
+- Docker (for local PostgreSQL + Redis)
+- A Neon PostgreSQL URL for production (or any PostgreSQL instance)
+
+### Local Development
+
 ```bash
-cd stockflow
+# 1. Install dependencies
 npm install
-```
 
-### 2. Environment
-`.env` file already hai. Apne hisaab se change karo:
-```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5433/stockflow?schema=public"
-REDIS_URL="redis://localhost:6379"
-BETTER_AUTH_SECRET="apna-random-secret-daalo-32-char-plus"
-BETTER_AUTH_URL="http://localhost:3000"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
-### 3. Docker
-```bash
+# 2. Start PostgreSQL and Redis
 docker compose up -d
-```
-PostgreSQL (5433) aur Redis (6379) start ho jayenge.
 
-### 4. Database tables
-```bash
-npx prisma migrate dev --name init
-```
+# 3. Run database migrations
+npx prisma migrate dev
 
-### 5. Dev server
-```bash
+# 4. Start the dev server
 npm run dev
 ```
-App chalega http://localhost:3000 pe.
 
-## Kaise kaam karta hai
+Open [http://localhost:3000](http://localhost:3000). Sign up with your organization name, email, and password.
 
-### Auth flow
-1. User login form me email/password daalta hai
-2. React Hook Form + Zod validation check karta hai
-3. Server action `signIn()` call hota hai
-4. Better Auth database me check karta hai
-5. Session create hota hai, Redis me cache hota hai
-6. User redirect home page pe
-7. Dashboard routes middleware se protect hain
+### Environment Variables
 
-### Folders kyu aise rakhe
-- **app/** - Next.js pages aur API routes
-- **components/** - UI components
-- **lib/** - Config, auth, database, validation sab
-- **middleware.ts** - Route protection
-
-## Important packages
-- next ^15.5
-- @prisma/client ^7.8
-- @prisma/adapter-pg
-- pg
-- better-auth ^1.6
-- ioredis
-- @tanstack/react-query ^5.101
-- zod ^4.4
-- react-hook-form ^7.80
-- sonner ^2.0
-- lucide-react ^1.23
-
-## Build
-```bash
-npm run build
+```
+DATABASE_URL       PostgreSQL connection string
+REDIS_URL          Redis URL (optional — app works without it)
+BETTER_AUTH_SECRET Random 32-byte base64 secret (generate with `openssl rand -base64 32`)
+BETTER_AUTH_URL    Your deployment URL (e.g., http://localhost:3000 or https://stockflow.vercel.app)
 ```
 
-## Kya missing hai abhi?
-Ye sirf initial setup hai. Actual features abhi nahi hai. Yeh scaffold hai jisme tum apna code likh sakte ho.
+Copy `.env.example` to `.env` and fill in the values.
+
+## Deployment
+
+### Vercel
+
+1. Push this repo to GitHub.
+2. Import the project on [Vercel](https://vercel.com).
+3. Add the environment variables listed above.
+4. Deploy. The build script runs `prisma generate && next build` automatically.
+5. After the first deploy, run `npx prisma migrate deploy` against your production database to create the tables.
+
+## License
+
+MIT

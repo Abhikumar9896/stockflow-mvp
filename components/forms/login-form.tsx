@@ -1,8 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, type LoginInput } from "@/schemas/login"
+import { createResolver } from "@/lib/utils/form"
 import { loginAction } from "@/lib/actions/auth/login"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -15,8 +15,7 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(loginSchema) as any,
+    resolver: createResolver(loginSchema),
   })
 
   async function onSubmit(data: LoginInput) {

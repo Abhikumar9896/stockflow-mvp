@@ -1,16 +1,6 @@
 import type { Product } from "@/types/product"
 import { CheckCheck } from "lucide-react"
-
-function getStatus(
-  product: Product,
-  defaultThreshold?: number | null
-): { label: string; className: string } {
-  const threshold = product.lowStockThreshold ?? defaultThreshold ?? null
-  if (threshold != null && product.quantityOnHand <= threshold) {
-    return { label: "Low Stock", className: "bg-red-100 text-red-700" }
-  }
-  return { label: "In Stock", className: "bg-green-100 text-green-700" }
-}
+import { getStatusLabel } from "@/lib/utils/status"
 
 export function LowStockTable({ products }: { products: Product[] }) {
   if (products.length === 0) {
@@ -38,7 +28,7 @@ export function LowStockTable({ products }: { products: Product[] }) {
         </thead>
         <tbody className="divide-y">
           {products.map((product) => {
-            const status = getStatus(product)
+            const status = getStatusLabel(product.quantityOnHand, product.lowStockThreshold, null)
             return (
               <tr key={product.id} className="hover:bg-muted/30">
                 <td className="px-4 py-3">{product.name}</td>

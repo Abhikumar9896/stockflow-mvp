@@ -3,22 +3,8 @@
 import type { Product } from "@/types/product"
 import { DeleteDialog } from "./delete-dialog"
 import { useState } from "react"
-import { getEffectiveThreshold, isLowStock } from "@/lib/utils/threshold"
+import { getStatusLabel } from "@/lib/utils/status"
 import { Pencil, Trash2 } from "lucide-react"
-
-function getStatus(
-  product: Product,
-  defaultThreshold: number | null
-): { label: string; className: string } {
-  const effective = getEffectiveThreshold(
-    product.lowStockThreshold,
-    defaultThreshold
-  )
-  if (isLowStock(product.quantityOnHand, effective)) {
-    return { label: "Low Stock", className: "bg-red-100 text-red-700" }
-  }
-  return { label: "In Stock", className: "bg-green-100 text-green-700" }
-}
 
 export function ProductRow({
   product,
@@ -28,7 +14,7 @@ export function ProductRow({
   defaultLowStockThreshold: number | null
 }) {
   const [deleteOpen, setDeleteOpen] = useState(false)
-  const status = getStatus(product, defaultLowStockThreshold)
+  const status = getStatusLabel(product.quantityOnHand, product.lowStockThreshold, defaultLowStockThreshold)
 
   return (
     <>

@@ -2,30 +2,7 @@ import { db } from "@/lib/db"
 import { getSettings } from "./settings.service"
 import { getEffectiveThreshold, isLowStock } from "@/lib/utils/threshold"
 import type { Product } from "@/types/product"
-
-function toNumber(val: unknown): number | null {
-  if (val == null) return null
-  if (typeof val === "number") return val
-  if (typeof (val as { toNumber?: () => number }).toNumber === "function")
-    return (val as { toNumber: () => number }).toNumber()
-  return Number(val)
-}
-
-function serializeProduct(p: Record<string, unknown>): Product {
-  return {
-    id: p.id as string,
-    organizationId: p.organizationId as string,
-    name: p.name as string,
-    sku: p.sku as string,
-    description: (p.description as string) ?? null,
-    quantityOnHand: p.quantityOnHand as number,
-    costPrice: toNumber(p.costPrice),
-    sellingPrice: toNumber(p.sellingPrice),
-    lowStockThreshold: toNumber(p.lowStockThreshold),
-    createdAt: p.createdAt as Date,
-    updatedAt: p.updatedAt as Date,
-  }
-}
+import { serializeProduct } from "@/lib/utils/product-serializer"
 
 export interface DashboardSummary {
   totalProducts: number
