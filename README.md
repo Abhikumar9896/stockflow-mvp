@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StockFlow
 
-## Getting Started
+Stock management app, simple aur beginner friendly.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Frontend
+- **Next.js 15** (App Router) - Full stack framework, SEO acha, deployment easy
+- **TypeScript** - Errors kam, code likhne me confidence
+- **TailwindCSS 4** - Utility classes, CSS nahi likhna padta
+- **shadcn/ui** - Copy-paste components, apne hisaab se modify kar sakte ho
+- **React Hook Form** - Forms handle karta hai, validation sab sambhal leta hai
+- **Zod** - TypeScript validation, schema banao types auto generate
+- **TanStack Query** - Server data fetch/cache/update, loading states handle
+- **Lucide** - Icons, light weight aur simple
+- **Sonner** - Toast notifications
+
+### Backend
+- **Next.js API Routes** - Alag Express server nahi, Next.js hi full stack hai
+- **Better Auth** - Session based authentication, setup easy
+- **Prisma** - ORM, typesafe queries, migrations
+- **PostgreSQL** - Relational database
+- **Redis** - Session caching, fast access
+
+### Folder Structure
+```
+stockflow/
+  prisma/
+    schema.prisma         Database models
+    migrations/           Auto-generated migrations
+  src/
+    app/
+      api/auth/[...all]/  Better Auth API
+      login/              Login page
+      globals.css         Styles
+      layout.tsx          Root layout
+      page.tsx            Home page
+    components/
+      ui/button.tsx       shadcn button
+      login-form.tsx      Login form
+      providers.tsx       TanStack Query + Sonner
+    lib/
+      auth.ts             Better Auth config
+      auth-client.ts      Client auth
+      prisma.ts           Prisma client
+      redis.ts            Redis connection
+      schemas.ts          Zod schemas
+      actions.ts          Server actions
+      types.ts            Common types
+    middleware.ts         Auth protection
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Install
+```bash
+cd stockflow
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Environment
+`.env` file already hai. Apne hisaab se change karo:
+```
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/stockflow?schema=public"
+REDIS_URL="redis://localhost:6379"
+BETTER_AUTH_SECRET="apna-random-secret-daalo-32-char-plus"
+BETTER_AUTH_URL="http://localhost:3000"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+```
 
-## Learn More
+### 3. Docker
+```bash
+docker compose up -d
+```
+PostgreSQL (5433) aur Redis (6379) start ho jayenge.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Database tables
+```bash
+npx prisma migrate dev --name init
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Dev server
+```bash
+npm run dev
+```
+App chalega http://localhost:3000 pe.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Kaise kaam karta hai
 
-## Deploy on Vercel
+### Auth flow
+1. User login form me email/password daalta hai
+2. React Hook Form + Zod validation check karta hai
+3. Server action `signIn()` call hota hai
+4. Better Auth database me check karta hai
+5. Session create hota hai, Redis me cache hota hai
+6. User redirect home page pe
+7. Dashboard routes middleware se protect hain
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Folders kyu aise rakhe
+- **app/** - Next.js pages aur API routes
+- **components/** - UI components
+- **lib/** - Config, auth, database, validation sab
+- **middleware.ts** - Route protection
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Important packages
+- next ^15.5
+- @prisma/client ^7.8
+- @prisma/adapter-pg
+- pg
+- better-auth ^1.6
+- ioredis
+- @tanstack/react-query ^5.101
+- zod ^4.4
+- react-hook-form ^7.80
+- sonner ^2.0
+- lucide-react ^1.23
+
+## Build
+```bash
+npm run build
+```
+
+## Kya missing hai abhi?
+Ye sirf initial setup hai. Actual features abhi nahi hai. Yeh scaffold hai jisme tum apna code likh sakte ho.
