@@ -30,7 +30,7 @@ export default async function EditProductPage({ params }: PageProps) {
           sellingPrice: product.sellingPrice ?? undefined,
           lowStockThreshold: product.lowStockThreshold ?? undefined,
         }}
-        onSubmit={(data) => updateProductAction(id, data)}
+        onSubmit={updateProductAction.bind(null, id)}
       />
     </div>
   )
