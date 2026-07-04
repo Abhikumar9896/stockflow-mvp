@@ -13,8 +13,8 @@ export function ProductSearch({ value, onChange }: ProductSearchProps) {
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search products..."
-        className="w-full h-9 rounded-lg border bg-background pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+        placeholder="Search by name or SKU..."
+        className="w-full h-10 rounded-lg border bg-background pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
       />
     </div>
   )

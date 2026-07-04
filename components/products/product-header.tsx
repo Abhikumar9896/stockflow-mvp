@@ -8,12 +8,12 @@ type ProductHeaderProps = {
 
 export function ProductHeader({ search, onSearchChange }: ProductHeaderProps) {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <div className="space-y-1">
           <h1 className="text-2xl font-bold">Products</h1>
-          <p className="text-muted-foreground text-sm">
-            Manage inventory products.
+          <p className="text-sm text-muted-foreground">
+            Manage your inventory.
           </p>
         </div>
         <a

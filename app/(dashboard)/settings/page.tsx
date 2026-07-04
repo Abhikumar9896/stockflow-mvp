@@ -1,6 +1,7 @@
 import { requireOrganization } from "@/lib/auth/helpers"
 import { getSettings } from "@/lib/services/settings.service"
 import { SettingsForm } from "@/components/settings/settings-form"
+import { PageHeader } from "@/components/shared/page-header"
 
 export default async function SettingsPage() {
   const organizationId = await requireOrganization()
@@ -8,13 +9,10 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-muted-foreground text-sm">
-          Manage inventory preferences.
-        </p>
-      </div>
-
+      <PageHeader
+        title="Settings"
+        subtitle="Inventory Preferences"
+      />
       <SettingsForm
         defaultLowStockThreshold={settings?.defaultLowStockThreshold ?? null}
       />

@@ -17,10 +17,10 @@ export function ProductTable({
           <tr className="text-left">
             <th className="px-4 py-3 font-medium">Name</th>
             <th className="px-4 py-3 font-medium">SKU</th>
-            <th className="px-4 py-3 font-medium text-right">Quantity</th>
+            <th className="px-4 py-3 font-medium text-center">Quantity</th>
             <th className="px-4 py-3 font-medium">Selling Price</th>
             <th className="px-4 py-3 font-medium">Status</th>
-            <th className="px-4 py-3 font-medium w-24">Actions</th>
+            <th className="px-4 py-3 font-medium w-20">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y">

@@ -4,6 +4,7 @@ import type { Product } from "@/types/product"
 import { DeleteDialog } from "./delete-dialog"
 import { useState } from "react"
 import { getEffectiveThreshold, isLowStock } from "@/lib/utils/threshold"
+import { Pencil, Trash2 } from "lucide-react"
 
 function getStatus(
   product: Product,
@@ -36,7 +37,7 @@ export function ProductRow({
         <td className="px-4 py-3 text-muted-foreground font-mono text-xs">
           {product.sku}
         </td>
-        <td className="px-4 py-3 text-right">{product.quantityOnHand}</td>
+        <td className="px-4 py-3 text-center">{product.quantityOnHand}</td>
         <td className="px-4 py-3">
           {product.sellingPrice != null
             ? `\u20B9${Number(product.sellingPrice).toFixed(2)}`
@@ -50,19 +51,21 @@ export function ProductRow({
           </span>
         </td>
         <td className="px-4 py-3">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1">
             <a
               href={`/products/${product.id}/edit`}
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="inline-flex items-center justify-center size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
+              title="Edit product"
             >
-              Edit
+              <Pencil className="size-3.5" />
             </a>
             <button
               type="button"
               onClick={() => setDeleteOpen(true)}
-              className="text-sm text-muted-foreground hover:text-red-600"
+              className="inline-flex items-center justify-center size-7 rounded-md text-muted-foreground hover:text-red-600 hover:bg-muted"
+              title="Delete product"
             >
-              Delete
+              <Trash2 className="size-3.5" />
             </button>
           </div>
         </td>
