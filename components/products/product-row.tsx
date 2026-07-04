@@ -1,20 +1,33 @@
+"use client"
+
 import type { Product } from "@/types/product"
 import { DeleteDialog } from "./delete-dialog"
 import { useState } from "react"
+import { getEffectiveThreshold, isLowStock } from "@/lib/utils/threshold"
 
-function getStatus(product: Product): { label: string; className: string } {
-  if (
-    product.lowStockThreshold != null &&
-    product.quantityOnHand <= product.lowStockThreshold
-  ) {
+function getStatus(
+  product: Product,
+  defaultThreshold: number | null
+): { label: string; className: string } {
+  const effective = getEffectiveThreshold(
+    product.lowStockThreshold,
+    defaultThreshold
+  )
+  if (isLowStock(product.quantityOnHand, effective)) {
     return { label: "Low Stock", className: "bg-red-100 text-red-700" }
   }
   return { label: "In Stock", className: "bg-green-100 text-green-700" }
 }
 
-export function ProductRow({ product }: { product: Product }) {
+export function ProductRow({
+  product,
+  defaultLowStockThreshold,
+}: {
+  product: Product
+  defaultLowStockThreshold: number | null
+}) {
   const [deleteOpen, setDeleteOpen] = useState(false)
-  const status = getStatus(product)
+  const status = getStatus(product, defaultLowStockThreshold)
 
   return (
     <>

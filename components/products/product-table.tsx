@@ -3,7 +3,13 @@
 import type { Product } from "@/types/product"
 import { ProductRow } from "./product-row"
 
-export function ProductTable({ products }: { products: Product[] }) {
+export function ProductTable({
+  products,
+  defaultLowStockThreshold,
+}: {
+  products: Product[]
+  defaultLowStockThreshold: number | null
+}) {
   return (
     <div className="rounded-lg border overflow-hidden">
       <table className="w-full text-sm">
@@ -19,7 +25,11 @@ export function ProductTable({ products }: { products: Product[] }) {
         </thead>
         <tbody className="divide-y">
           {products.map((product) => (
-            <ProductRow key={product.id} product={product} />
+            <ProductRow
+              key={product.id}
+              product={product}
+              defaultLowStockThreshold={defaultLowStockThreshold}
+            />
           ))}
         </tbody>
       </table>

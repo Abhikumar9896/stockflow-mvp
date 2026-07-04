@@ -1,13 +1,20 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { logoutAction } from "@/lib/actions/auth/logout"
 import { AppLogo } from "@/components/shared/app-logo"
 import { Button } from "@/components/ui/button"
-import { LogOut } from "lucide-react"
+import { LogOut, LayoutDashboard, Package, Settings } from "lucide-react"
+
+const navLinks = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/products", label: "Products", icon: Package },
+  { href: "/settings", label: "Settings", icon: Settings },
+]
 
 export function Navbar() {
   const router = useRouter()
+  const pathname = usePathname()
 
   async function handleLogout() {
     await logoutAction()
@@ -17,7 +24,28 @@ export function Navbar() {
   return (
     <header className="border-b">
       <div className="flex items-center justify-between px-6 h-14">
-        <AppLogo />
+        <div className="flex items-center gap-8">
+          <AppLogo />
+          <nav className="flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = pathname.startsWith(link.href)
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <link.icon className="size-4" />
+                  {link.label}
+                </a>
+              )
+            })}
+          </nav>
+        </div>
         <Button variant="ghost" size="sm" onClick={handleLogout}>
           <LogOut className="size-4 mr-1" />
           Logout

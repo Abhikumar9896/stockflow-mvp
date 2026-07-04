@@ -7,7 +7,13 @@ import { ProductTable } from "./product-table"
 import { EmptyState } from "./empty-state"
 import { SearchX } from "lucide-react"
 
-export function ProductListClient({ products }: { products: Product[] }) {
+export function ProductListClient({
+  products,
+  defaultLowStockThreshold,
+}: {
+  products: Product[]
+  defaultLowStockThreshold: number | null
+}) {
   const [search, setSearch] = useState("")
 
   const filtered = products.filter((p) => {
@@ -34,7 +40,10 @@ export function ProductListClient({ products }: { products: Product[] }) {
           </p>
         </div>
       ) : (
-        <ProductTable products={filtered} />
+        <ProductTable
+          products={filtered}
+          defaultLowStockThreshold={defaultLowStockThreshold}
+        />
       )}
     </div>
   )
