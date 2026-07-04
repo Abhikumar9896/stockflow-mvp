@@ -11,6 +11,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  user: {
+    additionalFields: {
+      organizationId: {
+        type: "string",
+        required: false,
+        input: false,
+      },
+    },
+  },
   secondaryStorage: {
     get: async (key) => {
       const value = await redis.get(key)

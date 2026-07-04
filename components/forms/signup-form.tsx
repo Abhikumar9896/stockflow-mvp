@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signUpSchema, type SignUpInput } from "@/schemas/signup"
 import { Button } from "@/components/ui/button"
-import { signUp } from "@/lib/actions"
+import { signupAction } from "@/lib/actions/auth/signup"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -19,11 +19,19 @@ export function SignUpForm() {
   })
 
   async function onSubmit(data: SignUpInput) {
-    const res = await signUp(data.name, data.email, data.password)
-    if (res.user) {
-      toast.success("Account created successfully")
-      router.push("/dashboard")
-    } else {
+    try {
+      const res = await signupAction({
+        organizationName: data.organizationName,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
+
+      if (res.user) {
+        toast.success("Account created successfully")
+        router.push("/dashboard")
+      }
+    } catch {
       toast.error("Something went wrong")
     }
   }
@@ -32,11 +40,23 @@ export function SignUpForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <input
-          {...register("name")}
-          placeholder="Name"
+          {...register("organizationName")}
+          placeholder="Organization name"
           className="w-full border p-2 rounded"
         />
-        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+        {errors.organizationName && (
+          <p className="text-red-500 text-sm">{errors.organizationName.message}</p>
+        )}
+      </div>
+      <div>
+        <input
+          {...register("name")}
+          placeholder="Your name"
+          className="w-full border p-2 rounded"
+        />
+        {errors.name && (
+          <p className="text-red-500 text-sm">{errors.name.message}</p>
+        )}
       </div>
       <div>
         <input
@@ -45,7 +65,9 @@ export function SignUpForm() {
           placeholder="Email"
           className="w-full border p-2 rounded"
         />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
+        )}
       </div>
       <div>
         <input
@@ -54,10 +76,23 @@ export function SignUpForm() {
           placeholder="Password"
           className="w-full border p-2 rounded"
         />
-        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password.message}</p>
+        )}
       </div>
-      <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Creating account..." : "Sign Up"}
+      <div>
+        <input
+          {...register("confirmPassword")}
+          type="password"
+          placeholder="Confirm password"
+          className="w-full border p-2 rounded"
+        />
+        {errors.confirmPassword && (
+          <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+        )}
+      </div>
+      <Button type="submit" disabled={isSubmitting} className="w-full">
+        {isSubmitting ? "Creating account..." : "Create Account"}
       </Button>
     </form>
   )

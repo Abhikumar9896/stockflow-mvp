@@ -1,12 +1,20 @@
 import { LoginForm } from "@/components/forms/login-form"
+import Link from "next/link"
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-sm space-y-6 p-6">
-        <h1 className="text-2xl font-bold text-center">Sign In</h1>
-        <LoginForm />
+    <>
+      <div className="text-center space-y-1">
+        <h1 className="text-xl font-bold">Welcome back</h1>
+        <p className="text-sm text-muted-foreground">Sign in to your account</p>
       </div>
-    </div>
+      <LoginForm />
+      <p className="text-center text-sm text-muted-foreground">
+        Don&apos;t have an account?{" "}
+        <Link href="/signup" className="underline hover:text-foreground">
+          Sign up
+        </Link>
+      </p>
+    </>
   )
 }

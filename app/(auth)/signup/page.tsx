@@ -1,12 +1,22 @@
 import { SignUpForm } from "@/components/forms/signup-form"
+import Link from "next/link"
 
 export default function SignUpPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-sm space-y-6 p-6">
-        <h1 className="text-2xl font-bold text-center">Sign Up</h1>
-        <SignUpForm />
+    <>
+      <div className="text-center space-y-1">
+        <h1 className="text-xl font-bold">Create your account</h1>
+        <p className="text-sm text-muted-foreground">
+          Set up your organization
+        </p>
       </div>
-    </div>
+      <SignUpForm />
+      <p className="text-center text-sm text-muted-foreground">
+        Already have an account?{" "}
+        <Link href="/login" className="underline hover:text-foreground">
+          Sign in
+        </Link>
+      </p>
+    </>
   )
 }

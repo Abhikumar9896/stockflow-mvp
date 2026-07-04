@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, type LoginInput } from "@/schemas/login"
 import { Button } from "@/components/ui/button"
-import { signIn } from "@/lib/actions"
+import { loginAction } from "@/lib/actions/auth/login"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -19,11 +19,13 @@ export function LoginForm() {
   })
 
   async function onSubmit(data: LoginInput) {
-    const res = await signIn(data.email, data.password)
-    if (res.user) {
-      toast.success("Signed in successfully")
-      router.push("/dashboard")
-    } else {
+    try {
+      const res = await loginAction(data)
+      if (res.user) {
+        toast.success("Signed in successfully")
+        router.push("/dashboard")
+      }
+    } catch {
       toast.error("Invalid credentials")
     }
   }
@@ -37,7 +39,9 @@ export function LoginForm() {
           placeholder="Email"
           className="w-full border p-2 rounded"
         />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
+        )}
       </div>
       <div>
         <input
@@ -46,9 +50,11 @@ export function LoginForm() {
           placeholder="Password"
           className="w-full border p-2 rounded"
         />
-        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password.message}</p>
+        )}
       </div>
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
     </form>
