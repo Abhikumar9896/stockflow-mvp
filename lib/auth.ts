@@ -1,19 +1,16 @@
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { nextCookies } from "better-auth/next-js"
-import { prisma } from "./prisma"
+import { db } from "./db"
 import { redis } from "./redis"
 
-// Better Auth setup - email/password authentication
-// Prisma ORM se database connect, Redis se session caching
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, {
+  database: prismaAdapter(db, {
     provider: "postgresql",
   }),
   emailAndPassword: {
     enabled: true,
   },
-  // Redis secondary storage - sessions and rate limiting fast access ke liye
   secondaryStorage: {
     get: async (key) => {
       const value = await redis.get(key)

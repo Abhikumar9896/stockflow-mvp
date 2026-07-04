@@ -2,34 +2,42 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema, type LoginInput } from "@/lib/schemas"
+import { signUpSchema, type SignUpInput } from "@/schemas/signup"
 import { Button } from "@/components/ui/button"
-import { signIn } from "@/lib/actions"
+import { signUp } from "@/lib/actions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-export function LoginForm() {
+export function SignUpForm() {
   const router = useRouter()
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignUpInput>({
+    resolver: zodResolver(signUpSchema),
   })
 
-  async function onSubmit(data: LoginInput) {
-    const res = await signIn(data.email, data.password)
+  async function onSubmit(data: SignUpInput) {
+    const res = await signUp(data.name, data.email, data.password)
     if (res.user) {
-      toast.success("Signed in successfully")
-      router.push("/")
+      toast.success("Account created successfully")
+      router.push("/dashboard")
     } else {
-      toast.error("Invalid credentials")
+      toast.error("Something went wrong")
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <input
+          {...register("name")}
+          placeholder="Name"
+          className="w-full border p-2 rounded"
+        />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+      </div>
       <div>
         <input
           {...register("email")}
@@ -49,7 +57,7 @@ export function LoginForm() {
         {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
       </div>
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Signing in..." : "Sign In"}
+        {isSubmitting ? "Creating account..." : "Sign Up"}
       </Button>
     </form>
   )
