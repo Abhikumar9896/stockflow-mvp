@@ -8,8 +8,14 @@ export async function deleteProductAction(id: string) {
   const organizationId = await requireOrganization()
 
   const existing = await getProduct(id, organizationId)
-  if (!existing) throw new Error("Product not found")
+  if (!existing) return { error: "Product not found" }
 
-  await deleteProduct(id)
+  try {
+    await deleteProduct(id)
+  } catch {
+    return { error: "Unable to delete product." }
+  }
+
   revalidatePath("/products")
+  return { success: true }
 }
