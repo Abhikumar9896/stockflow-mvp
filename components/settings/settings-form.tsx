@@ -37,17 +37,19 @@ export function SettingsForm({ defaultLowStockThreshold }: SettingsFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md">
-      <div className="rounded-lg border p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="max-w-2xl animate-fade-in">
+      <div className="rounded-2xl border bg-card p-8 shadow-sm space-y-8">
         <div>
-          <h3 className="font-semibold">Default Low Stock Threshold</h3>
+          <h3 className="text-xl font-semibold tracking-tight">Default Low Stock Threshold</h3>
           <p className="text-sm text-muted-foreground mt-1">
-            Products without threshold will use this value.
+            Products without a specific threshold will use this fallback value.
           </p>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="text-sm font-medium">Threshold Value</label>
+        <hr className="border-border" />
+
+        <div className="space-y-1.5 max-w-sm">
+          <label className="text-sm font-medium">Global Threshold Value</label>
           <input
             type="number"
             value={value}
@@ -57,14 +59,16 @@ export function SettingsForm({ defaultLowStockThreshold }: SettingsFormProps) {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="btn-primary"
-        >
-          {isPending && <Loader2 className="size-4 animate-spin" />}
-          {isPending ? "Saving..." : "Save Changes"}
-        </button>
+        <div className="pt-2">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="btn-primary rounded-full px-8 shadow-sm transition-all hover:shadow-md active:scale-95"
+          >
+            {isPending && <Loader2 className="size-4 animate-spin" />}
+            {isPending ? "Saving..." : "Save Changes"}
+          </button>
+        </div>
       </div>
     </form>
   )

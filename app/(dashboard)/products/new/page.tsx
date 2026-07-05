@@ -8,6 +8,10 @@ export default function NewProductPage() {
       <PageHeader
         title="Create Product"
         subtitle="Add a new inventory item."
+        breadcrumbs={[
+          { label: "Products", href: "/products" },
+          { label: "Create", href: "/products/new" },
+        ]}
       />
       <ProductForm mode="create" onSubmit={createProductAction} />
     </div>

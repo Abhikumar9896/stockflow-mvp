@@ -4,21 +4,29 @@ import Link from "next/link"
 
 export default function SignUpPage() {
   return (
-    <div className="w-full max-w-sm mx-auto space-y-6">
-      <div className="text-center space-y-2">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Package className="size-6" />
-          <span className="text-lg font-semibold">StockFlow</span>
+    <div className="w-full space-y-8 page-fade">
+      <div className="space-y-2">
+        {/* Mobile only logo */}
+        <div className="flex lg:hidden items-center gap-2 mb-6">
+          <div className="flex items-center justify-center size-8 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-100">
+            <Package className="size-5" />
+          </div>
+          <span className="text-xl font-bold">StockFlow</span>
         </div>
-        <h1 className="text-xl font-bold">Create your account</h1>
-        <p className="text-sm text-muted-foreground">
-          Set up your organization
+        
+        <h1 className="text-3xl font-bold tracking-tight">Create your account</h1>
+        <p className="text-muted-foreground">
+          Set up your organization to get started
         </p>
       </div>
-      <SignUpForm />
-      <p className="text-center text-sm text-muted-foreground">
+      
+      <div className="mt-8">
+        <SignUpForm />
+      </div>
+      
+      <p className="text-center text-sm text-muted-foreground mt-8">
         Already have an account?{" "}
-        <Link href="/login" className="font-medium underline hover:text-foreground">
+        <Link href="/login" className="font-semibold text-foreground hover:underline underline-offset-4 transition-colors">
           Sign in
         </Link>
       </p>

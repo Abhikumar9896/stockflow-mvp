@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react"
 import { ProductSearch } from "./product-search"
+import { PageHeader } from "@/components/shared/page-header"
 
 type ProductHeaderProps = {
   search: string
@@ -8,22 +8,11 @@ type ProductHeaderProps = {
 
 export function ProductHeader({ search, onSearchChange }: ProductHeaderProps) {
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold">Products</h1>
-          <p className="text-sm text-muted-foreground">
-            Manage your inventory.
-          </p>
-        </div>
-        <a
-          href="/products/new"
-          className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/80"
-        >
-          <Plus className="size-4" />
-          Add Product
-        </a>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Products"
+        subtitle="Manage your inventory."
+      />
       <ProductSearch value={search} onChange={onSearchChange} />
     </div>
   )
