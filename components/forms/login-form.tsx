@@ -25,8 +25,10 @@ export function LoginForm() {
         toast.success("Signed in successfully")
         router.push("/dashboard")
       }
-    } catch {
-      toast.error("Invalid credentials")
+    } catch (e) {
+      console.error("login error:", e)
+      const msg = e instanceof Error ? e.message : "Invalid credentials"
+      toast.error(msg)
     }
   }
 
