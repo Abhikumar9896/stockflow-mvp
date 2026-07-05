@@ -11,8 +11,8 @@ export function ProductTable({
   defaultLowStockThreshold: number | null
 }) {
   return (
-    <div className="rounded-lg border overflow-hidden">
-      <table className="w-full text-sm">
+    <div className="rounded-lg border overflow-x-auto">
+      <table className="w-full text-sm min-w-[600px]">
         <thead className="bg-muted/50">
           <tr className="text-left">
             <th className="px-4 py-3 font-medium">Name</th>

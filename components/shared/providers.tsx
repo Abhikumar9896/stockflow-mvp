@@ -10,7 +10,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <Toaster richColors />
+      <Toaster
+        richColors
+        position="top-right"
+        toastOptions={{
+          className: "rounded-xl border border-border/50 bg-card shadow-lg font-medium px-4 py-3"
+        }}
+      />
     </QueryClientProvider>
   )
 }

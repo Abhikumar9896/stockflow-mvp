@@ -1,35 +1,16 @@
+import { Package } from "lucide-react"
+
 export default function DashboardLoading() {
   return (
-    <div className="space-y-6 animate-pulse">
-      <div className="flex items-center justify-between">
-        <div className="space-y-1.5">
-          <div className="h-7 w-36 rounded-md bg-muted" />
-          <div className="h-4 w-48 rounded-md bg-muted" />
-        </div>
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="rounded-lg border p-4 space-y-2">
-            <div className="size-5 rounded bg-muted" />
-            <div className="h-4 w-24 rounded bg-muted" />
-            <div className="h-7 w-16 rounded bg-muted" />
-          </div>
-        ))}
-      </div>
-      <div className="space-y-3">
-        <div className="h-5 w-40 rounded bg-muted" />
-        <div className="rounded-lg border">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-center gap-4 p-4 border-b last:border-b-0">
-              <div className="h-4 w-32 rounded bg-muted" />
-              <div className="h-4 w-20 rounded bg-muted" />
-              <div className="h-4 w-12 rounded bg-muted ml-auto" />
-              <div className="h-4 w-16 rounded bg-muted" />
-              <div className="h-5 w-20 rounded-full bg-muted" />
-            </div>
-          ))}
-        </div>
+    <div className="flex h-[85vh] w-full flex-col items-center justify-center gap-6">
+      <div className="relative flex h-16 w-16 items-center justify-center">
+        {/* Spinning dashed ring */}
+        <span className="absolute inset-0 animate-[spin_3s_linear_infinite] rounded-full border-[3px] border-dashed border-primary/30 border-t-primary" />
+        
+        {/* Center pulsing icon */}
+        <Package className="relative z-10 size-6 animate-pulse text-primary drop-shadow-sm" strokeWidth={2} />
       </div>
     </div>
   )
 }
+
