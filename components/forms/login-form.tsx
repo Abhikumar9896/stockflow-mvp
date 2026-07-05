@@ -40,7 +40,7 @@ export function LoginForm() {
           {...register("email")}
           type="email"
           placeholder="you@example.com"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.email && (
           <p className="text-xs text-red-500">{errors.email.message}</p>
@@ -52,7 +52,7 @@ export function LoginForm() {
           {...register("password")}
           type="password"
           placeholder="Enter your password"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.password && (
           <p className="text-xs text-red-500">{errors.password.message}</p>
@@ -61,7 +61,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-10 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/80 disabled:opacity-50 inline-flex items-center justify-center gap-1.5"
+        className="btn-primary w-full h-10"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" />}
         {isSubmitting ? "Signing in..." : "Sign In"}

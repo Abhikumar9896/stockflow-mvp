@@ -53,14 +53,14 @@ export function SettingsForm({ defaultLowStockThreshold }: SettingsFormProps) {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="e.g. 5"
-            className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+            className="input-base"
           />
         </div>
 
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/80 disabled:opacity-50"
+          className="btn-primary"
         >
           {isPending && <Loader2 className="size-4 animate-spin" />}
           {isPending ? "Saving..." : "Save Changes"}

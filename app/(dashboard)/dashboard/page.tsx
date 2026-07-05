@@ -6,6 +6,7 @@ import { LowStockTable } from "@/components/dashboard/low-stock-table"
 import { PageHeader } from "@/components/shared/page-header"
 import { StatCard } from "@/components/shared/stat-card"
 
+
 export default async function DashboardPage() {
   const organizationId = await requireOrganization()
 
@@ -19,7 +20,7 @@ export default async function DashboardPage() {
 
   if (!hasProducts) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <PageHeader
           title="Dashboard"
           subtitle="Inventory Overview"
@@ -43,7 +44,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <PageHeader
         title="Dashboard"
         subtitle="Inventory Overview"

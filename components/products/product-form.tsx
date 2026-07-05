@@ -91,7 +91,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
             </label>
             <input
               {...register("name")}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
             {errors.name && (
               <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
@@ -104,7 +104,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
             </label>
             <input
               {...register("sku")}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
             {errors.sku && (
               <p className="text-xs text-red-500 mt-1">{errors.sku.message}</p>
@@ -116,7 +116,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
             <textarea
               {...register("description")}
               rows={3}
-              className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+              className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none transition-all duration-150 focus:ring-2 focus:ring-primary/20 resize-none"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
             <input
               type="number"
               {...register("quantityOnHand", { setValueAs: (v) => (v === "" ? 0 : Number(v)) })}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
             {errors.quantityOnHand && (
               <p className="text-xs text-red-500 mt-1">
@@ -153,7 +153,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
               {...register("lowStockThreshold", {
                 setValueAs: (v) => (v === "" ? undefined : Number(v)),
               })}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
               {...register("costPrice", {
                 setValueAs: (v) => (v === "" ? undefined : Number(v)),
               })}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
             {errors.costPrice && (
               <p className="text-xs text-red-500 mt-1">
@@ -192,7 +192,7 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
               {...register("sellingPrice", {
                 setValueAs: (v) => (v === "" ? undefined : Number(v)),
               })}
-              className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              className="input-base"
             />
             {errors.sellingPrice && (
               <p className="text-xs text-red-500 mt-1">
@@ -212,14 +212,14 @@ export function ProductForm({ mode, defaultValues, onSubmit }: ProductFormProps)
           <button
             type="button"
             onClick={() => router.back()}
-            className="h-9 px-4 rounded-lg border text-sm font-medium hover:bg-muted"
+            className="btn-ghost"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isPending}
-            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary"
           >
             {isPending && <Loader2 className="size-4 animate-spin" />}
             {isPending

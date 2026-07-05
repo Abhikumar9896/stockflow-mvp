@@ -45,7 +45,7 @@ export function SignUpForm() {
         <input
           {...register("organizationName")}
           placeholder="Your company name"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.organizationName && (
           <p className="text-xs text-red-500">{errors.organizationName.message}</p>
@@ -56,7 +56,7 @@ export function SignUpForm() {
         <input
           {...register("name")}
           placeholder="John Doe"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.name && (
           <p className="text-xs text-red-500">{errors.name.message}</p>
@@ -68,7 +68,7 @@ export function SignUpForm() {
           {...register("email")}
           type="email"
           placeholder="you@example.com"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.email && (
           <p className="text-xs text-red-500">{errors.email.message}</p>
@@ -80,7 +80,7 @@ export function SignUpForm() {
           {...register("password")}
           type="password"
           placeholder="Min. 8 characters"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.password && (
           <p className="text-xs text-red-500">{errors.password.message}</p>
@@ -92,7 +92,7 @@ export function SignUpForm() {
           {...register("confirmPassword")}
           type="password"
           placeholder="Repeat your password"
-          className="w-full h-10 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          className="input-base"
         />
         {errors.confirmPassword && (
           <p className="text-xs text-red-500">{errors.confirmPassword.message}</p>
@@ -101,7 +101,7 @@ export function SignUpForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-10 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/80 disabled:opacity-50 inline-flex items-center justify-center gap-1.5"
+        className="btn-primary w-full h-10"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" />}
         {isSubmitting ? "Creating account..." : "Create Account"}
