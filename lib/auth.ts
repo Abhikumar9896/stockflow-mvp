@@ -49,6 +49,7 @@ export const auth = betterAuth({
       },
     },
   },
+  baseURL: process.env.BETTER_AUTH_URL!,
   secondaryStorage: getSecondaryStorage(),
   trustedOrigins: [process.env.BETTER_AUTH_URL!].filter(Boolean),
   plugins: [nextCookies()],

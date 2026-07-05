@@ -89,10 +89,11 @@ Open [http://localhost:3000](http://localhost:3000). Sign up with your organizat
 ### Environment Variables
 
 ```
-DATABASE_URL       PostgreSQL connection string
-REDIS_URL          Redis URL (optional — app works without it)
-BETTER_AUTH_SECRET Random 32-byte base64 secret (generate with `openssl rand -base64 32`)
-BETTER_AUTH_URL    Your deployment URL (e.g., http://localhost:3000 or https://stockflow.vercel.app)
+DATABASE_URL                 PostgreSQL connection string
+REDIS_URL                    Redis URL (optional — app works without it)
+BETTER_AUTH_SECRET           Random 32-byte base64 secret (generate with `openssl rand -base64 32`)
+BETTER_AUTH_URL              Server-side deployment URL (e.g., http://localhost:3000 or https://stockflow.vercel.app)
+NEXT_PUBLIC_BETTER_AUTH_URL  Client-side base URL for better-auth (same value as BETTER_AUTH_URL)
 ```
 
 Copy `.env.example` to `.env` and fill in the values.
